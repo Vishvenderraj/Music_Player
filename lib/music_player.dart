@@ -22,7 +22,6 @@ class _MusicPlayerState extends State<MusicPlayer>
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     animationController = AnimationController(
       vsync: this,
@@ -36,7 +35,6 @@ class _MusicPlayerState extends State<MusicPlayer>
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     animationController.dispose();
   }
