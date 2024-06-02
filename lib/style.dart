@@ -7,7 +7,7 @@ ourStyle(String type, double size,Color color){
       fontWeight: type == "bold"? FontWeight.w700:FontWeight.w300,
       fontSize: size,
       color: color,
-      letterSpacing: 1,
+      overflow: TextOverflow.ellipsis
     )
   );
 }
