@@ -1,6 +1,4 @@
-# proj
-
-A new Flutter project.
+# An Stylish Music Player.
 
 ## Getting Started
 
