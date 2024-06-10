@@ -14,6 +14,8 @@ class PlayerController extends GetxController{
   var position = ''.obs;
   var max = 0.0.obs;
   var value = 0.0.obs;
+  var heart = false.obs;
+  var onRepeat = false.obs;
 
   @override
   void onInit() {
@@ -21,6 +23,15 @@ class PlayerController extends GetxController{
     checkPermission();
   }
 
+   isliked(){
+    heart.value = !heart.value;
+  }
+  setRepeat(){
+    onRepeat.value = !onRepeat.value;
+  }
+  checkRepeat(){
+    onRepeat.value?audioPlayer.setLoopMode(LoopMode.one):audioPlayer.setLoopMode(LoopMode.off);
+  }
   updatePosition(){
     audioPlayer.durationStream.listen((during) {
       duration.value = during.toString().split(".")[0];
@@ -51,6 +62,12 @@ class PlayerController extends GetxController{
     updatePosition();
   }
 
+  shuffle(){
+    audioPlayer.shuffleModeEnabled;
+  }
+  repeat(){
+    audioPlayer.loopMode;
+  }
   Future<void>checkPermission() async
   {
     var status = await Permission.audio.request();
