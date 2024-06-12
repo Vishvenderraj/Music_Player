@@ -2,7 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:proj/playlist.dart';
+import 'package:proj/album_list.dart';
+import 'package:proj/artist_list.dart';
+import 'package:proj/style.dart';
+import 'package:proj/track_list.dart';
 
 
 void main() {
@@ -35,16 +38,24 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const Playlist()
+      home: const MySecondHomePage(),
     );
   }
 }
-
-List<BottomNavigationBarItem> pages = const[
-  BottomNavigationBarItem(icon: Icon(CupertinoIcons.person,color: Colors.white),label: 'Artist'),
-  BottomNavigationBarItem(icon: Icon(CupertinoIcons.person,color: Colors.white),label: 'Album'),
-  BottomNavigationBarItem(icon: Icon(CupertinoIcons.person,color: Colors.white),label: 'Playlists'),
+int _selectedIndex = 0;
+List<BottomNavigationBarItem> pages = [
+  BottomNavigationBarItem(icon: const Icon(CupertinoIcons.person,),label: 'Artist',backgroundColor: Colors.black.withOpacity(0.6)),
+  BottomNavigationBarItem(icon: const Icon(Icons.album_outlined),label: 'Album',backgroundColor: Colors.black.withOpacity(0.6)),
+  BottomNavigationBarItem(icon: const Icon(CupertinoIcons.music_note_2),label: 'Tracks',backgroundColor: Colors.black.withOpacity(0.6)),
+  BottomNavigationBarItem(icon: const Icon(CupertinoIcons.music_note_list),label: 'Playlist',backgroundColor: Colors.black.withOpacity(0.6)),
 ];
+
+ List getBody = const [
+   ArtistList(),
+   AlbumList(),
+   TrackList(),
+   AlbumList(),
+ ];
 
 class MySecondHomePage extends StatefulWidget {
   const MySecondHomePage({super.key});
@@ -57,11 +68,26 @@ class _MySecondHomePageState extends State<MySecondHomePage> {
    @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: BottomNavigationBar(items: pages,
-        onTap: (idx){
-
-        },
+      backgroundColor: Colors.grey,
+      bottomNavigationBar: SizedBox(
+        height: MediaQuery.sizeOf(context).height*0.075,
+        child: BottomNavigationBar(
+          elevation: 10,
+          type: BottomNavigationBarType.shifting,
+          unselectedLabelStyle: ourStyle("bold", 15, Colors.grey),
+          selectedLabelStyle: ourStyle("bold", 15, Colors.white),
+          selectedIconTheme: const IconThemeData(color: CupertinoColors.white),
+          unselectedIconTheme: const IconThemeData(color: CupertinoColors.systemGrey2),
+          currentIndex: _selectedIndex,
+          items: pages,
+          onTap: (idx){
+            setState(() {
+              _selectedIndex = idx;
+            });
+          },
+        ),
       ),
+      body: getBody[_selectedIndex],
       );
   }
 }
