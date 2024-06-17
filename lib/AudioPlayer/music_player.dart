@@ -2,10 +2,9 @@ import 'package:blurrycontainer/blurrycontainer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:just_audio/just_audio.dart';
 import 'package:on_audio_query/on_audio_query.dart';
-import 'package:proj/style.dart';
-import 'controller/player_controller.dart';
+import 'package:proj/styles/style.dart';
+import '../controller/player_controller.dart';
 
 class MusicPlayer extends StatefulWidget {
   final List<SongModel> data;
@@ -215,18 +214,23 @@ class _MusicPlayerState extends State<MusicPlayer>
                   () => Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        widget.data[controller.songIndex.value].artist!,
-                        style: ourStyle("normal", 25, Colors.white),
+                      Expanded(
+                        child: Text(
+                          widget.data[controller.songIndex.value].artist!,
+                          style: ourStyle("normal", 25, Colors.white),
+                        ),
                       ),
-                      GestureDetector(
-                        onTap: (){
-                          controller.isliked();
-                        },
-                        child: Icon(
-                          CupertinoIcons.heart_circle_fill,
-                          color: controller.heart.value?Colors.grey.shade100:Colors.green.shade200,
-                          size: 25,
+                      Expanded(
+                        flex: 0,
+                        child: GestureDetector(
+                          onTap: (){
+                            controller.isliked();
+                          },
+                          child: Icon(
+                            CupertinoIcons.heart_circle_fill,
+                            color: controller.heart.value?Colors.grey.shade100:Colors.green.shade200,
+                            size: 25,
+                          ),
                         ),
                       ),
                     ],
@@ -253,9 +257,7 @@ class _MusicPlayerState extends State<MusicPlayer>
                                     .changeDurationToSeconds(value.toInt());
                                 value = value;
                               },
-                              min: const Duration(seconds: 0)
-                                  .inSeconds
-                                  .toDouble(),
+                              min: const Duration(seconds: 0).inSeconds.toDouble(),
                               max: controller.max.value,
                               activeColor: Colors.white,
                               inactiveColor: Colors.white.withOpacity(0.3),
@@ -293,7 +295,7 @@ class _MusicPlayerState extends State<MusicPlayer>
                               prevIndex = widget.data.length - 1;
                             }
                             controller.playSong(
-                                widget.data[prevIndex].uri, true, prevIndex);
+                                widget.data[prevIndex].uri, prevIndex);
                           },
                           icon: const Icon(CupertinoIcons.backward_end_fill),
                           color: Colors.white,
@@ -317,7 +319,7 @@ class _MusicPlayerState extends State<MusicPlayer>
                             blur: 15,
                             height: 65,
                             width: 65,
-                            elevation: 1,
+                            elevation: 2,
                             shadowColor: Colors.black.withOpacity(0.7),
                             borderRadius: BorderRadius.circular(50),
                             color: Colors.white.withOpacity(0.3),
@@ -340,8 +342,7 @@ class _MusicPlayerState extends State<MusicPlayer>
                             if (changeIndex >= widget.data.length) {
                               changeIndex = 0;
                             }
-                            controller.playSong(widget.data[changeIndex].uri,
-                                true, changeIndex);
+                            controller.playSong(widget.data[changeIndex].uri, changeIndex);
                           },
                           icon: const Icon(CupertinoIcons.forward_end_fill),
                           color: CupertinoColors.white,

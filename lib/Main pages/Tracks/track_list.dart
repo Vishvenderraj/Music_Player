@@ -2,9 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:on_audio_query/on_audio_query.dart';
-import 'package:proj/music_player.dart';
-import 'package:proj/style.dart';
-import 'controller/player_controller.dart';
+import 'package:proj/AudioPlayer/music_player.dart';
+import 'package:proj/styles/style.dart';
+import '../../controller/player_controller.dart';
 
 class TrackList extends StatelessWidget {
 
@@ -46,6 +46,7 @@ class TrackList extends StatelessWidget {
       ),
       body: FutureBuilder<List<SongModel>>(
         future: audioQuery.querySongs(
+
           ignoreCase: true,
           sortType: SongSortType.TITLE,
         ),
@@ -104,7 +105,7 @@ class TrackList extends StatelessWidget {
                             {
                               controller.playPause();
                             }
-                          controller.playSong(item.data![index].uri, controller.isPlaying.value,index);
+                          controller.playSong(item.data![index].uri,index);
                         },
                       ),
                     ),

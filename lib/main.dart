@@ -2,10 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:proj/album_list.dart';
-import 'package:proj/artist_list.dart';
-import 'package:proj/style.dart';
-import 'package:proj/track_list.dart';
+import 'package:proj/Main%20pages/Album/album_list.dart';
+import 'package:proj/Main%20pages/Artist/artist_list.dart';
+import 'package:proj/Main%20pages/Playlist/playlist.dart';
+import 'package:proj/styles/style.dart';
+import 'package:proj/Main%20pages/Tracks/track_list.dart';
 
 
 void main() {
@@ -54,7 +55,7 @@ List<BottomNavigationBarItem> pages = [
    ArtistList(),
    AlbumList(),
    TrackList(),
-   AlbumList(),
+   Playlist(),
  ];
 
 class MySecondHomePage extends StatefulWidget {

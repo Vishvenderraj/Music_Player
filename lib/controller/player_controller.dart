@@ -9,6 +9,8 @@ class PlayerController extends GetxController{
   final audioQuery = OnAudioQuery();
   final audioPlayer = AudioPlayer();
   final isPlaying = false.obs;
+  var songAlbum = ''.obs;
+  var songArtist = ''.obs;
   final songIndex = 0.obs;
   var duration = ''.obs;
   var position = ''.obs;
@@ -53,12 +55,20 @@ class PlayerController extends GetxController{
   {
     isPlaying.value = !isPlaying.value;
   }
-
-  playSong(String? uri, bool isPlaying, int index)
+  playList(String?uri,int index, String? artist, String? album)
+  {
+    audioPlayer.setAudioSource(AudioSource.uri(Uri.parse(uri!)));
+    audioPlayer.play();
+    songIndex.value = index;
+    songAlbum.value = album ?? 'unknown';
+    songArtist.value = artist ?? 'unknown';
+  }
+  playSong(String? uri, int index)
   {
     songIndex.value = index;
     audioPlayer.setAudioSource(AudioSource.uri(Uri.parse(uri!)));
-    isPlaying?audioPlayer.play():audioPlayer.pause();
+    audioPlayer.play();
+    isPlaying.value = true;
     updatePosition();
   }
 

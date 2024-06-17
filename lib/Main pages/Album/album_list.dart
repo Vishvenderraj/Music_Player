@@ -1,16 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:on_audio_query/on_audio_query.dart';
-import 'package:proj/style.dart';
-import 'controller/player_controller.dart';
+import 'package:proj/Main%20pages/Album/album_songlist.dart';
+import 'package:proj/styles/style.dart';
+
 
 class AlbumList extends StatelessWidget {
   const AlbumList({super.key});
 
   @override
   Widget build(BuildContext context) {
-    var controller = Get.put(PlayerController());
     final OnAudioQuery audioQuery = OnAudioQuery();
     /* someName() async {                   //SCAN MEDIA
       File file = File('path');
@@ -76,7 +75,7 @@ class AlbumList extends StatelessWidget {
                           borderRadius: BorderRadius.circular(8),
                           color: CupertinoColors.systemGrey.withOpacity(0.2),
                         ),
-                        child: Obx(()=> ListTile(
+                        child:  ListTile(
                           title: Text(
                             item.data![index].album,
                             style: ourStyle("bold", 18, Colors.white),
@@ -84,18 +83,19 @@ class AlbumList extends StatelessWidget {
                           leading:  QueryArtworkWidget(
                             controller: audioQuery,
                             id: item.data![index].id,
-                            type: ArtworkType.AUDIO,
+                            type: ArtworkType.ALBUM,
                             nullArtworkWidget: const Image(image: AssetImage('assets/disk.png')),
                           ),
                           subtitle: Text(
                             item.data![index].artist ?? "Unknown Artist",
                             style: ourStyle("regular", 14, Colors.white),
                           ),
-                          trailing: Icon(
-                            controller.songIndex.value == index && controller.isPlaying.value?CupertinoIcons.pause_circle_fill:CupertinoIcons.play_circle,
-                            color: Colors.white,
-                          ),
                           onTap: (){
+                            Navigator.push(context,
+                              MaterialPageRoute(
+                                  builder: (context)=> AlbumSongs(albumName: item.data![index].album, id: item.data![index].id),
+                              ),
+                            );
                             /*Get.to(
                                   ()=>  MusicPlayer(data: item.data?,
                               ),
@@ -111,7 +111,6 @@ class AlbumList extends StatelessWidget {
                             }
                             controller.playSong(item.data![index].uri, controller.isPlaying.value,index);*/
                           },
-                        ),
                         ),
                       ),
                     ),
