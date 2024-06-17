@@ -1,15 +1,19 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:proj/Main%20pages/Album/album_list.dart';
-import 'package:proj/Main%20pages/Artist/artist_list.dart';
-import 'package:proj/Main%20pages/Playlist/playlist.dart';
 import 'package:proj/styles/style.dart';
-import 'package:proj/Main%20pages/Tracks/track_list.dart';
+
+import 'Root_pages/Album/album_list.dart';
+import 'Root_pages/Artist/artist_list.dart';
+import 'Root_pages/Playlist/playlist.dart';
+import 'Root_pages/Tracks/track_list.dart';
+
 
 
 void main() {
+  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(statusBarColor: Colors.transparent, statusBarBrightness: Brightness.dark),);
   runApp(const MyApp());
 }
 
