@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -14,6 +16,9 @@ class TrackList extends StatelessWidget {
   Widget build(BuildContext context) {
     var controller = Get.put(PlayerController());
     final OnAudioQuery audioQuery = OnAudioQuery();
+    Future<Uint8List?> fetchAlbumArtwork(int songId) async {
+      return await audioQuery.queryArtwork(songId, ArtworkType.AUDIO);
+    }
    /* someName() async {                   //SCAN MEDIA
       File file = File( 'path');
       try {
@@ -25,6 +30,7 @@ class TrackList extends StatelessWidget {
         debugPrint('$e');
       }
     }*/
+
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
@@ -91,9 +97,10 @@ class TrackList extends StatelessWidget {
                           controller.songIndex.value == index && controller.isPlaying.value?CupertinoIcons.pause_circle_fill:CupertinoIcons.play_circle,
                           color: Colors.white,
                         ),
-                        onTap: (){
+                        onTap: () async{
+                          Uint8List? artwork = await fetchAlbumArtwork(item.data![index].id);
                           Get.to(
-                              ()=>  MusicPlayer(data: item.data!,
+                              ()=>  MusicPlayer(data: item.data!,artwork: artwork,
                               ),
                             transition: Transition.downToUp,
                           );

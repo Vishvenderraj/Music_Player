@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -20,7 +22,9 @@ class _ArtistSongsState extends State<ArtistSongs> {
   final OnAudioQuery audioQuery = OnAudioQuery();
   var controller = Get.put(PlayerController());
   List<SongModel> listofsongs = [];
-
+  Future<Uint8List?> fetchAlbumArtwork(int songId) async {
+    return await audioQuery.queryArtwork(songId, ArtworkType.AUDIO);
+  }
   Future<void> fetchSongs() async {
     List<SongModel> songs = await audioQuery.querySongs();
     setState(() {
@@ -129,9 +133,10 @@ class _ArtistSongsState extends State<ArtistSongs> {
                                       padding: const EdgeInsets.only(left: 15.0),
                                       child: Icon(controller.songArtist.value == widget.artistName && controller.songIndex.value == index && controller.isPlaying.value?Icons.pause_circle_outline:Icons.play_circle_filled_outlined,color: Colors.black,),
                                     ),
-                                    onTap: (){
+                                    onTap: ()async{
+                                      Uint8List? artwork = await fetchAlbumArtwork(song.id);
                                       Get.to(
-                                            ()=>  MusicPlayer(data: listofsongs,
+                                            ()=>  MusicPlayer(data: listofsongs,artwork: artwork,
                                         ),
                                         transition: Transition.downToUp,
                                       );

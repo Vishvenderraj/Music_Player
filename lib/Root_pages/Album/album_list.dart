@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 import 'package:proj/styles/style.dart';
-
 import 'album_songlist.dart';
 
 
@@ -12,6 +11,7 @@ class AlbumList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final OnAudioQuery audioQuery = OnAudioQuery();
+
     /* someName() async {                   //SCAN MEDIA
       File file = File('path');
       try {

@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 import 'package:proj/styles/style.dart';
-
 import 'artist_songslist.dart';
 class ArtistList extends StatelessWidget {
   const ArtistList({super.key});

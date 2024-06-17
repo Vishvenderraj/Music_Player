@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:blurrycontainer/blurrycontainer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +10,8 @@ import '../controller/player_controller.dart';
 
 class MusicPlayer extends StatefulWidget {
   final List<SongModel> data;
-  const MusicPlayer({super.key, required this.data});
+  final Uint8List? artwork;
+  const MusicPlayer({super.key, required this.data, this.artwork});
 
   @override
   State<MusicPlayer> createState() => _MusicPlayerState();
@@ -48,20 +51,14 @@ class _MusicPlayerState extends State<MusicPlayer>
           height: double.infinity,
           width: double.infinity,
           decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                Colors.black,
-                Colors.black.withOpacity(0.6),
-                Colors.black.withOpacity(0.7),
-                Colors.black.withOpacity(0.9),
-              ],
-            ),
+            color: Colors.black.withOpacity(0.5),
+            image:  widget.artwork!=null?DecorationImage(image:MemoryImage(widget.artwork!),fit: BoxFit.cover):null,
           ),
           child: BlurryContainer(
             padding: const EdgeInsets.all(15),
-            color: Colors.white.withOpacity(0.4),
             elevation: 10,
             blur: 15,
+            color: Colors.black.withOpacity(0.4),
             borderRadius: BorderRadius.circular(0),
             height: MediaQuery.sizeOf(context).height,
             width: MediaQuery.sizeOf(context).width,
@@ -173,24 +170,32 @@ class _MusicPlayerState extends State<MusicPlayer>
                 ),
                 Obx(
                   () => Center(
-                    child: Container(
-                      height: MediaQuery.sizeOf(context).height / 2,
-                      width: MediaQuery.sizeOf(context).width,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: QueryArtworkWidget(
-                        artworkBorder: BorderRadius.circular(20),
-                        artworkWidth: double.infinity,
-                        id: widget.data[controller.songIndex.value].id,
-                        type: ArtworkType.AUDIO,
-                        nullArtworkWidget: Container(
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20)),
-                          child: const Image(
-                            fit: BoxFit.contain,
-                            image: AssetImage(
-                              'assets/disk.png',
+                    child: Material(
+                      elevation: 15,
+                      shadowColor: Colors.black,
+                      borderRadius: BorderRadius.circular(20),
+                      child: Container(
+                        height: MediaQuery.sizeOf(context).height / 2,
+                        width: MediaQuery.sizeOf(context).width,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: QueryArtworkWidget(
+                          artworkBorder: BorderRadius.circular(20),
+                          artworkWidth: double.infinity,
+                          id: widget.data[controller.songIndex.value].id,
+                          type: ArtworkType.AUDIO,
+                          nullArtworkWidget: Container(
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20)),
+                            child: const Padding(
+                              padding:  EdgeInsets.all(20.0),
+                              child: Image(
+                                fit: BoxFit.contain,
+                                image: AssetImage(
+                                  'assets/disk.png',
+                                ),
+                              ),
                             ),
                           ),
                         ),
@@ -227,8 +232,8 @@ class _MusicPlayerState extends State<MusicPlayer>
                             controller.isliked();
                           },
                           child: Icon(
-                            CupertinoIcons.heart_circle_fill,
-                            color: controller.heart.value?Colors.grey.shade100:Colors.green.shade200,
+                            CupertinoIcons.suit_heart_fill,
+                            color: controller.heart.value?Colors.grey.shade100:Colors.red.shade300,
                             size: 25,
                           ),
                         ),
@@ -358,7 +363,7 @@ class _MusicPlayerState extends State<MusicPlayer>
                             },
                             child: Icon(
                               controller.onRepeat.value?CupertinoIcons.repeat_1:CupertinoIcons.repeat,
-                              color: controller.onRepeat.value?Colors.green.shade200:Colors.grey.shade300,
+                              color: controller.onRepeat.value?Colors.green.shade300:Colors.grey.shade300,
                               size: 25,
                             ),
                           ),

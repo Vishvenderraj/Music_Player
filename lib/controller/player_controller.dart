@@ -72,6 +72,8 @@ class PlayerController extends GetxController{
     updatePosition();
   }
 
+
+
   shuffle(){
     audioPlayer.shuffleModeEnabled;
   }
